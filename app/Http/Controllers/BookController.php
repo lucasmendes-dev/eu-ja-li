@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,17 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(5);
-        //dd($books);
+        $user = Auth::user();
+        $books = Book::where('user_id', $user->id)->paginate(20);
         return Inertia::render('Index', ['books' => $books]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
