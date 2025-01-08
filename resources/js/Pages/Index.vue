@@ -8,7 +8,7 @@ import CreateModal from './Books/CreateModal.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-defineProps({ books: Array });
+defineProps({ books: Object });
 
 const isModalOpen = ref(false);
 const openModal = () => (isModalOpen.value = true);
@@ -49,6 +49,6 @@ const closeModal = () => (isModalOpen.value = false);
                 </div>
             </div>
         </div>
-        <CreateModal :isOpen="isModalOpen" @close="closeModal"</CreateModal>/>
+        <CreateModal :isOpen="isModalOpen" @close="closeModal"</CreateModal>
     </AuthenticatedLayout>
 </template>

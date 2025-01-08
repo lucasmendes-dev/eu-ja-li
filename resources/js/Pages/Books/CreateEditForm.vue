@@ -1,33 +1,52 @@
+<script setup>
+import { reactive } from 'vue';
+import { router } from '@inertiajs/vue3';
+
+const form = reactive({
+    title: null,
+    author: null,
+    genre: null,
+    year: null,
+    read_in: null,
+    status: null
+});
+
+function submit() {
+    router.post(route('books.store'), form);
+}
+
+</script>
+
 <template>
-    <form class="max-w-sm mx-auto mt-5">
+    <form @submit.prevent="submit" class="max-w-sm mx-auto mt-5">
         <div class="flex space-x-4">
             <div class="mb-5  w-full">
                 <label for="title" class="block mb-2 text-sm font-medium text-gray-900 w-1/2">Título <span class="text-red-500">*</span></label>
-                <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required  placeholder="Nome do livro"/>
+                <input type="text" id="title" v-model="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required  placeholder="Nome do livro"/>
             </div>
 
             <div class="mb-5  w-full">
                 <label for="author" class="block mb-2 text-sm font-medium text-gray-900 w-1/2">Autor <span class="text-red-500">*</span></label>
-                <input type="text" id="author" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required  placeholder="Nome do autor"/>
+                <input type="text" id="author" v-model="form.author" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required  placeholder="Nome do autor"/>
             </div>
         </div>
 
         <div class="flex space-x-4">
             <div class="mb-5  w-full">
                 <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 w-1/2">Gênero</label>
-                <input type="text" id="genre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Ex: Romance"/>
+                <input type="text" id="genre" v-model="form.genre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Ex: Romance"/>
             </div>
 
             <div class="mb-5  w-full">
                 <label for="year" class="block mb-2 text-sm font-medium text-gray-900 ">Ano de Publicação</label>
-                <input type="number" id="year" min="1500" step="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ex: 2009"/>
+                <input type="number" id="year" min="1500" step="1" v-model="form.year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ex: 2009"/>
             </div>
         </div>
 
         <div class="flex space-x-4">
             <div class="mb-5 w-full">
-                <label for="year" class="block mb-2 text-sm font-medium text-gray-900">Lido em</label>
-                <input type="number" id="year" min="1500" step="1" 
+                <label for="read_in" class="block mb-2 text-sm font-medium text-gray-900">Lido em</label>
+                <input type="number" id="read_in" min="1500" step="1" v-model="form.read_in"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
                         dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
@@ -36,10 +55,10 @@
 
             <div class="mb-5 w-full">
                 <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status <span class="text-red-500">*</span></label>
-                <select id="genre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none" required>
-                    <option value="not_completed" class="text-red-500">Não Lido</option>
-                    <option value="in_progress" class="text-blue-500">Em Leitura</option>
-                    <option value="completed" class="text-green-500">Lido</option>
+                <select id="genre" v-model="form.status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 appearance-none" required>
+                    <option value="not_completed" class="text-red-400">Não Lido</option>
+                    <option value="in_progress" class="text-blue-400">Em Leitura</option>
+                    <option value="completed" class="text-green-400">Lido</option>
                 </select>
             </div>
         </div>

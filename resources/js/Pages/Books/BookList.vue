@@ -1,9 +1,29 @@
 <script setup>
+import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
-defineProps({ 
-    books: Array
+const props = defineProps({
+    books: Object
 });
 
+const statusColors = {
+    not_completed: 'bg-red-400 text-white',
+    in_progress: 'bg-blue-400 text-white',
+    completed: 'bg-green-400 text-white',
+};
+
+function statusColorClass(status) {
+    return this.statusColors[status];
+}
+
+function bookStatusLabel(status) {
+    const labels = {
+        not_completed: 'Não Lido',
+        in_progress: 'Lendo',
+        completed: 'Lido',
+    };
+    return labels[status];
+}
 
 </script>
 
@@ -40,15 +60,23 @@ defineProps({
                     {{ book.author }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ book.status }}
+                    <!-- <span class="bg-green-400 rounded-full px-2"> -->
+                    <span
+                        :class="[
+                            'rounded-full px-2',
+                            statusColorClass(book.status)
+                        ]"
+                    >
+                        {{ bookStatusLabel(book.status) }}
+                    </span>
                 </td>
                 <td class="px-6 py-4">
-                    {{ book.read_in }}
+                    {{ book.read_in.slice(0, 4) }}
                 </td>
                 <td class="px-6 py-4">
-                    <a href="#" class="dark:text-blue-500 hover:underline mx-2">
+                    <Link :href="route('books.edit', book.id)" class="dark:text-blue-500 hover:underline mx-2">
                         <ion-icon name="create-outline" class="w-4 h-4"></ion-icon>
-                    </a>
+                    </Link>
 
                     <button data-record-id="" class="dark:text-red-500 hover:underline delete-button" type="button">
                         <ion-icon name="trash-outline" class="w-4 h-4"></ion-icon>

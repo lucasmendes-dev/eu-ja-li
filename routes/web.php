@@ -26,5 +26,7 @@ Route::middleware('auth')->group(function () {
 // })->middleware(['auth', 'verified'])->name('books');
 
 Route::get('/books', [BookController::class, 'index'])->middleware(['auth', 'verified'])->name('books');
+Route::post('/books', [BookController::class, 'store'])->middleware(['auth', 'verified'])->name('books.store');
+Route::get('/books/{id}/edit', [BookController::class, 'edit'])->middleware(['auth', 'verified'])->name('books.edit');
 
 require __DIR__.'/auth.php';

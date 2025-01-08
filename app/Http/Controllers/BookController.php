@@ -24,7 +24,14 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['year'] = $data['year'] ? $data['year'] . '-01-01' : null;
+        $data['read_in'] = $data['read_in'] ? $data['read_in'] . '-01-01' : null;
+        $data['user_id'] = Auth::user()->id;
+
+        // adicionar validações
+        Book::create($data);
+        return Inertia::render('Index');
     }
 
     /**
@@ -38,9 +45,10 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
+    public function edit(string $id)
     {
-        //
+        //decidir se vai tentar fazer o edit numa modal usando SPA
+        dd($id);
     }
 
     /**

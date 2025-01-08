@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('author');
             $table->enum('status', ['not_completed', 'in_progress', 'completed']);
-            $table->string('genre');
-            $table->dateTime('year');
-            $table->dateTime('read_in');
+            $table->string('genre')->nullable();
+            $table->date('year')->nullable();
+            $table->date('read_in')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
