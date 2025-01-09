@@ -35,20 +35,12 @@ class BookController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Book $book)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //decidir se vai tentar fazer o edit numa modal usando SPA
-        dd($id);
+        $book = Book::findOrFail($id);
+        return Inertia::render('Books/Edit', ['book' => $book]);
     }
 
     /**
@@ -56,7 +48,7 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        dd("we're here!");
     }
 
     /**

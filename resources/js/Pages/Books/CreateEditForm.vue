@@ -3,14 +3,15 @@ import { reactive, defineEmits } from 'vue';
 import { router } from '@inertiajs/vue3';
 
 const emit = defineEmits(['close']);
+const props = defineProps({ book: Object });
 
 const form = reactive({
-    title: null,
-    author: null,
-    genre: null,
-    year: null,
-    read_in: null,
-    status: null
+    title: props.book?.title || '',
+    author: props.book?.author || '',
+    genre: props.book?.genre || '',
+    year: parseInt(props.book?.year) || '',
+    read_in: parseInt(props.book?.read_in) || '',
+    status: props.book?.status || ''
 });
 
 function submit() {
@@ -73,7 +74,10 @@ function submit() {
         </div>
 
         <div class="flex justify-end ">
-            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-end">Submit</button>
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <span v-if="book">Alterar</span>
+                <span v-else>Adicionar</span>
+            </button>
         </div>
     </form>
 </template>

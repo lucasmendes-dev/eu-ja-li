@@ -29,5 +29,6 @@ Route::get('/books', [BookController::class, 'index'])->middleware(['auth', 'ver
 Route::post('/books', [BookController::class, 'store'])->middleware(['auth', 'verified'])->name('books.store');
 Route::get('/books/{id}/edit', [BookController::class, 'edit'])->middleware(['auth', 'verified'])->name('books.edit');
 Route::delete('/books/{id}', [BookController::class, 'destroy'])->middleware(['auth', 'verified'])->name('books.destroy');
+Route::put('/books/{id}', [BookController::class, 'update'])->middleware(['auth', 'verified'])->name('books.update');
 
 require __DIR__.'/auth.php';
