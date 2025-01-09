@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     books: Object
@@ -23,6 +23,12 @@ function bookStatusLabel(status) {
         completed: 'Lido',
     };
     return labels[status];
+}
+
+function askDelete(bookId) {
+    if (window.confirm("Você irá deletar o livro e não será possível recuperar!")) {
+        router.delete(route('books.destroy', bookId));
+    }
 }
 
 </script>
@@ -71,14 +77,15 @@ function bookStatusLabel(status) {
                     </span>
                 </td>
                 <td class="px-6 py-4">
-                    {{ book.read_in.slice(0, 4) }}
+                    <span v-if="book.read_in"> {{ book.read_in.slice(0, 4) }} </span>
+                    <span v-else> - </span>
                 </td>
                 <td class="px-6 py-4">
                     <Link :href="route('books.edit', book.id)" class="dark:text-blue-500 hover:underline mx-2">
                         <ion-icon name="create-outline" class="w-4 h-4"></ion-icon>
                     </Link>
 
-                    <button data-record-id="" class="dark:text-red-500 hover:underline delete-button" type="button">
+                    <button @click="askDelete(book.id)" data-record-id="" class="dark:text-red-500 hover:underline delete-button" type="button">
                         <ion-icon name="trash-outline" class="w-4 h-4"></ion-icon>
                     </button>
                 </td>

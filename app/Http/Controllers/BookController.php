@@ -31,7 +31,7 @@ class BookController extends Controller
 
         // adicionar validações
         Book::create($data);
-        return Inertia::render('Index');
+        return redirect(route('books'));
     }
 
     /**
@@ -62,8 +62,9 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(string $id)
     {
-        //
+        $book = Book::findOrFail($id);
+        $book->delete();
     }
 }

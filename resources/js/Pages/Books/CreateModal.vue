@@ -8,17 +8,22 @@ defineProps({
 });
 
 const emit = defineEmits(["close"]);
+
+function handleClose() {
+  emit('close');
+}
+
 </script>
 
 <template>
-  <div v-if="isOpen" class="modal-overlay" @click.self="emit('close')">
+  <div v-if="isOpen" class="modal-overlay" @click.self="handleClose">
     <div class="modal-content">
       <header>
         <h2 class="font-bold">Adicionar Livro</h2>
-        <button @click="emit('close')" class="close-btn">X</button>
+        <button @click="handleClose" class="close-btn">X</button>
       </header>
       <div>
-        <CreateEditForm/>
+        <CreateEditForm @close="handleClose" />
       </div>
     </div>
   </div>

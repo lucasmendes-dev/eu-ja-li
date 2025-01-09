@@ -1,6 +1,8 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, defineEmits } from 'vue';
 import { router } from '@inertiajs/vue3';
+
+const emit = defineEmits(['close']);
 
 const form = reactive({
     title: null,
@@ -12,7 +14,14 @@ const form = reactive({
 });
 
 function submit() {
-    router.post(route('books.store'), form);
+    router.post(route('books.store'), form, {
+    onSuccess: () => {
+      emit('close');
+    },
+    onError: (errors) => {
+      console.error('Erro ao salvar:', errors);
+    }
+  });
 }
 
 </script>

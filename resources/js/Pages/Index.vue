@@ -49,6 +49,6 @@ const closeModal = () => (isModalOpen.value = false);
                 </div>
             </div>
         </div>
-        <CreateModal :isOpen="isModalOpen" @close="closeModal"</CreateModal>
+        <CreateModal :isOpen="isModalOpen" @close="closeModal" />
     </AuthenticatedLayout>
 </template>
