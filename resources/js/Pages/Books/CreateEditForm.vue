@@ -15,14 +15,19 @@ const form = reactive({
 });
 
 function submit() {
-    router.post(route('books.store'), form, {
-    onSuccess: () => {
-      emit('close');
-    },
-    onError: (errors) => {
-      console.error('Erro ao salvar:', errors);
+    if (props.book == undefined) {
+        router.post(route('books.store'), form, {
+            onSuccess: () => {
+                emit('close');
+            },
+            onError: (errors) => {
+                console.error('Erro ao salvar:', errors);
+            }
+        });
+    } else {
+        router.put(route('books.update', props.book.id), form);
     }
-  });
+
 }
 
 </script>

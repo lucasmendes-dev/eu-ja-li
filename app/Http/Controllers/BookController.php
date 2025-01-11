@@ -25,8 +25,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['year'] = $data['year'] ? $data['year'] . '-01-01' : null;
-        $data['read_in'] = $data['read_in'] ? $data['read_in'] . '-01-01' : null;
+        $data = $this->prepareYearFormatToSave($data);
         $data['user_id'] = Auth::user()->id;
 
         // adicionar validações
@@ -46,9 +45,16 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request, string $id)
     {
-        dd("we're here!");
+        $book = Book::findOrFail($id);
+        $data = $request->all();
+
+        $data = $this->prepareYearFormatToSave($data);
+        $data['user_id'] = Auth::user()->id;
+
+        $book->update($data);
+        return redirect(route('books'));
     }
 
     /**
@@ -58,5 +64,12 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
         $book->delete();
+    }
+
+    public function prepareYearFormatToSave(array $data): array
+    {
+        $data['year'] = $data['year'] ? $data['year'] . '-01-01' : null;
+        $data['read_in'] = $data['read_in'] ? $data['read_in'] . '-01-01' : null;
+        return $data;
     }
 }

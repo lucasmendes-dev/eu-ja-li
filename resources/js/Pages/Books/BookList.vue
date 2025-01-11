@@ -26,7 +26,7 @@ function bookStatusLabel(status) {
 }
 
 function askDelete(bookId) {
-    if (window.confirm("Você irá deletar o livro e não será possível recuperar!")) {
+    if (window.confirm("Você irá deletar o livro e não será possível recuperar.")) {
         router.delete(route('books.destroy', bookId));
     }
 }
