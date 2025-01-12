@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Filter from './Books/Filter.vue';
 import BookList from './Books/BookList.vue';
 import CreateModal from './Books/CreateModal.vue';
+import Pagination from './Books/Pagination.vue';
 
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -48,7 +49,9 @@ const closeModal = () => (isModalOpen.value = false);
                             </button>
                         </div>
                         <BookList :books="books"/>
-                        
+                        <div class="float-end mt-5 mb-5">
+                            <Pagination :links="books.links"/>
+                        </div>
                     </div>
                 </div>
             </div>
