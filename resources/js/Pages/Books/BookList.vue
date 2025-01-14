@@ -9,6 +9,7 @@ const props = defineProps({
 const statusColors = {
     not_completed: 'bg-red-400 text-white',
     in_progress: 'bg-blue-400 text-white',
+    abandoned: 'bg-orange-400 text-white',
     completed: 'bg-green-400 text-white',
 };
 
@@ -20,6 +21,7 @@ function bookStatusLabel(status) {
     const labels = {
         not_completed: 'Não Lido',
         in_progress: 'Lendo',
+        abandoned: 'Abandonado',
         completed: 'Lido',
     };
     return labels[status];
@@ -46,10 +48,13 @@ function askDelete(bookId) {
                     Autor
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Status
+                    Gênero
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Ano de Leitura
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Edit</span>
@@ -62,11 +67,21 @@ function askDelete(bookId) {
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                     {{ book.title }}
                 </th>
+
                 <td class="px-6 py-4">
                     {{ book.author }}
                 </td>
+
                 <td class="px-6 py-4">
-                    <!-- <span class="bg-green-400 rounded-full px-2"> -->
+                    {{ book.genre }}
+                </td>
+
+                <td class="px-6 py-4">
+                    <span v-if="book.read_in" class="ml-4"> {{ book.read_in.slice(0, 4) }} </span>
+                    <span v-else class="ml-6"> - </span>
+                </td>
+
+                <td class="px-6 py-4">
                     <span
                         :class="[
                             'rounded-full px-2',
@@ -76,10 +91,7 @@ function askDelete(bookId) {
                         {{ bookStatusLabel(book.status) }}
                     </span>
                 </td>
-                <td class="px-6 py-4">
-                    <span v-if="book.read_in"> {{ book.read_in.slice(0, 4) }} </span>
-                    <span v-else> - </span>
-                </td>
+
                 <td class="px-6 py-4">
                     <Link :href="route('books.edit', book.id)" class="dark:text-blue-500 hover:underline mx-2">
                         <ion-icon name="create-outline" class="w-4 h-4"></ion-icon>

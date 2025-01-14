@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->enum('status', ['not_completed', 'in_progress', 'completed']);
+            $table->enum('status', ['not_completed', 'in_progress', 'abandoned', 'completed']);
             $table->string('genre')->nullable();
             $table->date('year')->nullable();
             $table->date('read_in')->nullable();

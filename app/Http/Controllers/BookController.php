@@ -12,11 +12,18 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $books = Book::where('user_id', $user->id)->paginate(10);
-        return Inertia::render('Index', ['books' => $books]);
+        $search = $request->input('search');
+
+        $books = Book::where('user_id', $user->id)
+        ->when($search, fn($query) => $query->where('title', 'like', "%{$search}%"))
+        ->orderBy('title')
+        ->paginate(10)
+        ->appends(['search' => $search]);
+
+        return Inertia::render('Index', ['books' => $books, 'search' => $search]);
     }
 
     /**

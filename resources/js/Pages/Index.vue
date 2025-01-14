@@ -9,7 +9,7 @@ import Pagination from './Books/Pagination.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-defineProps({ books: Object });
+defineProps({ books: Object, search: String });
 
 const isModalOpen = ref(false);
 const openModal = () => (isModalOpen.value = true);
@@ -18,7 +18,7 @@ const closeModal = () => (isModalOpen.value = false);
 </script>
 
 <template>
-    <Head title="Meus Livros" />
+    <Head title="Eu Já Li - Meus Livros" />
 
     <AuthenticatedLayout>
         <!-- <template #header>
@@ -31,7 +31,10 @@ const closeModal = () => (isModalOpen.value = false);
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <Filter/>
+                <div class="flex">
+                    <Filter class="w-full"/>
+                    <p v-if="search" class="ml-4 mt-4">Você está buscando por: "{{ search }}"</p> 
+                </div>
                 <div
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
                 >
