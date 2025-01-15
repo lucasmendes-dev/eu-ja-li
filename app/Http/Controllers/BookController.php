@@ -16,11 +16,12 @@ class BookController extends Controller
     {
         $user = Auth::user();
         $search = $request->input('search');
+        $orderByField = $request->input('orderByField') ? $request->input('orderByField') : 'title';
         $paginateNumber = 10;
 
         $books = Book::where('user_id', $user->id)
         ->when($search, fn($query) => $query->where('title', 'like', "%{$search}%"))
-        ->orderBy('title')
+        ->orderBy($orderByField)
         ->paginate($paginateNumber)
         ->appends(['search' => $search]);
 
