@@ -16,14 +16,15 @@ class BookController extends Controller
     {
         $user = Auth::user();
         $search = $request->input('search');
+        $paginateNumber = 10;
 
         $books = Book::where('user_id', $user->id)
         ->when($search, fn($query) => $query->where('title', 'like', "%{$search}%"))
         ->orderBy('title')
-        ->paginate(10)
+        ->paginate($paginateNumber)
         ->appends(['search' => $search]);
 
-        return Inertia::render('Index', ['books' => $books, 'search' => $search]);
+        return Inertia::render('Index', ['books' => $books, 'search' => $search, 'paginateNumber' => $paginateNumber]);
     }
 
     /**

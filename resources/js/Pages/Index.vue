@@ -9,7 +9,7 @@ import Pagination from './Books/Pagination.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-defineProps({ books: Object, search: String });
+defineProps({ books: Object, search: String, paginateNumber: Number });
 
 const isModalOpen = ref(false);
 const openModal = () => (isModalOpen.value = true);
@@ -29,7 +29,7 @@ const closeModal = () => (isModalOpen.value = false);
             </h2>
         </template> -->
 
-        <div class="py-12">
+        <div class="py-5">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex">
                     <Filter class="w-full"/>
@@ -51,9 +51,10 @@ const closeModal = () => (isModalOpen.value = false);
                                 Adicionar Livro
                             </button>
                         </div>
-                        <BookList :books="books"/>
+                        <BookList v-if="books.data.length > 0" :books="books"/>
+                        <!-- <p v-else>Nenhum livro encontrado</p> -->
                         <div class="float-end mt-5 mb-5">
-                            <Pagination :links="books.links"/>
+                            <Pagination :links="books.links" :books="books" :paginateNumber="paginateNumber"/>
                         </div>
                     </div>
                 </div>
