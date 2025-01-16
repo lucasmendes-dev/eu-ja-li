@@ -15,17 +15,29 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $search = $request->input('search');
-        $orderByField = $request->input('orderByField') ? $request->input('orderByField') : 'title';
+        $search = $request->input('search', []);
+        $orderByField = $request->input('orderByField', 'title');
         $paginateNumber = 10;
 
+        if (isset($search['read_in'])) {
+            $search = $this->prepareYearFormatToSave($search);
+        }
+
         $books = Book::where('user_id', $user->id)
-        ->when($search, fn($query) => $query->where('title', 'like', "%{$search}%"))
+        ->when(isset($search['title']), fn($query) => $query->where('title', 'like', "%{$search['title']}%"))
+        ->when(isset($search['author']), fn($query) => $query->where('author', 'like', "%{$search['author']}%"))
+        ->when(isset($search['genre']), fn($query) => $query->where('genre', 'like', "%{$search['genre']}%"))
+        ->when(isset($search['read_in']), fn($query) => $query->where('read_in', $search['read_in']))
+        ->when(isset($search['status']), fn($query) => $query->where('status', $search['status']))
         ->orderBy($orderByField)
         ->paginate($paginateNumber)
-        ->appends(['search' => $search, 'orderByField' => $orderByField]);
+        ->appends(['orderByField' => $orderByField, 'search' => $search]);
 
-        return Inertia::render('Index', ['books' => $books, 'search' => $search, 'paginateNumber' => $paginateNumber]);
+        return Inertia::render('Index', [
+            'books' => $books,
+            'search' => $search,
+            'paginateNumber' => $paginateNumber
+        ]);
     }
 
     /**
@@ -77,8 +89,12 @@ class BookController extends Controller
 
     public function prepareYearFormatToSave(array $data): array
     {
-        $data['year'] = $data['year'] ? $data['year'] . '-01-01' : null;
-        $data['read_in'] = $data['read_in'] ? $data['read_in'] . '-01-01' : null;
+        if (isset($data['year'])) {
+            $data['year'] = $data['year'] . '-01-01';
+        }
+        if (isset($data['read_in'])) {
+            $data['read_in'] = $data['read_in'] . '-01-01';
+        }
         return $data;
     }
 }

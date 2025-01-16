@@ -7,10 +7,10 @@ const props = defineProps({
 });
 
 const statusColors = {
-    not_completed: 'bg-red-400 text-white',
-    in_progress: 'bg-blue-400 text-white',
-    abandoned: 'bg-orange-400 text-white',
-    completed: 'bg-green-400 text-white',
+    not_completed: 'bg-red-600 text-white',
+    in_progress: 'bg-blue-600 text-white',
+    abandoned: 'bg-orange-500 text-white',
+    completed: 'bg-green-600 text-white',
 };
 
 function statusColorClass(status) {

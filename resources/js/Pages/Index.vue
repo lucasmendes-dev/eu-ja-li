@@ -9,49 +9,50 @@ import Pagination from './Books/Pagination.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-defineProps({ books: Object, search: String, paginateNumber: Number });
+const props = defineProps({ books: Object, search: Array, paginateNumber: Number });
 
 const isModalOpen = ref(false);
 const openModal = () => (isModalOpen.value = true);
 const closeModal = () => (isModalOpen.value = false);
+
+function searchIsNotEmpty() {
+    return Object.values(props.search).some(value => value !== null);
+}
 
 </script>
 
 <template>
     <Head title="Eu Já Li - Meus Livros" />
 
-    <AuthenticatedLayout>
-        <!-- <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                Filtros
-            </h2>
-        </template> -->
-
+    <AuthenticatedLayout>  
         <div class="py-5">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="flex">
-                    <Filter class="w-full"/>
-                    <p v-if="search" class="ml-4 mt-4">
-                        Você está buscando por: "{{ search }}"
-                        <a :href="route('books')" class="bg-gray-400 rounded px-2 py-2 ml-3 text-gray-700">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-5 py-3">
+                    <div class="flex">
+                        <h2 class="text-xl font-semibold leading-tight text-gray-800">Filtros</h2>
+                        <a v-if="searchIsNotEmpty()" :href="route('books')" class="ml-3 text-white rounded-lg p-1 px-6 dark:bg-gray-500 dark:hover:bg-gray-400">
                             <ion-icon name="reload-outline"></ion-icon>
                         </a>
-                    </p>
+                    </div>
+                    <div class="flex">
+                        <Filter class="w-full"/>
+                    </div>
                 </div>
-                <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-                >
+            </div>
+        </div>
+
+        <div class="py-2">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8  mb-10"> 
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <div class="flex items-center mb-2 justify-between">
                             <div class="flex">
                                 <h2 class="text-xl font-semibold leading-tight text-gray-800 mb-2 ml-2">
                                     Meus Livros
                                 </h2>
-                                <p class="ml-3 mb-1 bg-gray-200 rounded px-5 text-center">{{ books.total }}</p>
+                                <p class="ml-3 mb-1 bg-gray-200 rounded-lg px-5 text-center">{{ books.total }}</p>
                             </div>
-                            <button  class="text-white end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2"
+                            <button class="text-white end-2.5 bottom-2.5 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mb-2"
                                 @click="openModal" >
                                 Adicionar Livro
                             </button>

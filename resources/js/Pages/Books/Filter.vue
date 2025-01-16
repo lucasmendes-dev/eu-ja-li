@@ -1,27 +1,69 @@
 <script setup>
-import { ref, watch} from 'vue';
+import { ref, reactive } from 'vue';
 import { router } from '@inertiajs/vue3';
 
-const searchQuery = ref('');
+const form = reactive({
+    title: '',
+    author: '',
+    genre: '',
+    read_in: '',
+    status: '',
+});
 
-function searchBooks() {
-    router.get(route('books'), { search: searchQuery.value }, { preserveState: true, preserveScroll: true });
+function filterBooks() {
+    router.get(route('books'), { search: form }, { preserveState: true, preserveScroll: true });
+}
+
+function clear() {
+    router.get(route('books'));
 }
 
 </script>
 
 <template>
     
-<form @submit.prevent="searchBooks" class="max-w-md mb-5">   
-    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div class="relative">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
+<form @submit.prevent="filterBooks" class="max-w-md mb-5">   
+    <div class="flex mt-5">
+        <div class="mr-5">
+            <label for="title" class="block mb-2 text-sm font-medium">Nome do Livro</label>
+            <input v-model="form.title" type="text" id="title" class="block p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500" placeholder="Ex: Dom Casmurro" />
         </div>
-        <input v-model="searchQuery" type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-gray-200 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500" placeholder="Digite o nome do livro..." />
-        <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+
+        <div class="mr-5">
+            <label for="author" class="block mb-2 text-sm font-medium">Nome do Autor</label>
+            <input v-model="form.author" type="text" id="author" class="block p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500" placeholder="Ex: Machado de Assis" />
+        </div>
+
+        <div class="mr-5">
+            <label for="genre" class="block mb-2 text-sm font-medium">Gênero</label>
+            <input v-model="form.genre" type="text" id="genre" class="block p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500" placeholder="Ex: Romance" />
+        </div>
+
+        <div class="mr-5">
+            <label for="read_in" class="block mb-2 text-sm font-medium">Ano de Leitura</label>
+            <input v-model="form.read_in" type="number" id="read_in" class="block p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500" placeholder="Ex: 2021" />
+        </div>
+
+        <div class="mr-5">
+            <label for="status" class="block mb-2 text-sm font-medium">Status</label>
+            <select v-model="form.status" id="status" class="p-3 px-9 block text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500">
+                <option value=""></option>
+                <option value="not_completed" class="text-red-400">Não Lido</option>
+                <option value="in_progress" class="text-blue-400">Em Leitura</option>
+                <option value="abandoned" class="text-orange-400">Abandonado</option>
+                <option value="completed" class="text-green-400">Lido</option>
+            </select>
+        </div>
+
+        <div>
+            <br>
+            <button type="submit" class="text-white focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm p-3 px-7 mt-1 dark:bg-gray-600 dark:hover:bg-gray-700">Buscar</button>
+        </div>
+        <div>
+            <br>
+
+        </div>
+
     </div>
 </form>
 
