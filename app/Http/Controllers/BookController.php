@@ -23,7 +23,7 @@ class BookController extends Controller
         ->when($search, fn($query) => $query->where('title', 'like', "%{$search}%"))
         ->orderBy($orderByField)
         ->paginate($paginateNumber)
-        ->appends(['search' => $search]);
+        ->appends(['search' => $search, 'orderByField' => $orderByField]);
 
         return Inertia::render('Index', ['books' => $books, 'search' => $search, 'paginateNumber' => $paginateNumber]);
     }

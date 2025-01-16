@@ -33,7 +33,12 @@ const closeModal = () => (isModalOpen.value = false);
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="flex">
                     <Filter class="w-full"/>
-                    <p v-if="search" class="ml-4 mt-4">Você está buscando por: "{{ search }}"</p> 
+                    <p v-if="search" class="ml-4 mt-4">
+                        Você está buscando por: "{{ search }}"
+                        <a :href="route('books')" class="bg-gray-400 rounded px-2 py-2 ml-3 text-gray-700">
+                            <ion-icon name="reload-outline"></ion-icon>
+                        </a>
+                    </p>
                 </div>
                 <div
                     class="overflow-hidden bg-white shadow-sm sm:rounded-lg"

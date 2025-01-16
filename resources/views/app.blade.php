@@ -22,9 +22,4 @@
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </body>
 
-    <footer class="bg-white dark:bg-white-800 border-b border-gray-100 dark:border-gray-700 py-5">
-        <div class="flex items-center justify-center text">
-            Eu Já Li &copy; {{ now()->year }}
-        </div>
-    </footer>
 </html>
