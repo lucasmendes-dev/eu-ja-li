@@ -6,17 +6,22 @@ import BookList from './Books/BookList.vue';
 import CreateModal from './Books/CreateModal.vue';
 import Pagination from './Books/Pagination.vue';
 
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({ books: Object, search: Array, paginateNumber: Number });
 
 const isModalOpen = ref(false);
+const setPaginateNumber = ref(props.paginateNumber);
 const openModal = () => (isModalOpen.value = true);
 const closeModal = () => (isModalOpen.value = false);
 
 function searchIsNotEmpty() {
     return Object.values(props.search).some(value => value !== null);
+}
+
+function changePaginateNumber() {
+    router.get(route('books'), { paginateNumber: setPaginateNumber.value }, { preserveState: true, preserveScroll: true });
 }
 
 </script>
@@ -58,9 +63,18 @@ function searchIsNotEmpty() {
                             </button>
                         </div>
                         <BookList v-if="books.data.length > 0" :books="books"/>
-                        <!-- <p v-else>Nenhum livro encontrado</p> -->
-                        <div class="float-end mt-5 mb-5">
-                            <Pagination :links="books.links" :books="books" :paginateNumber="paginateNumber"/>
+
+                        <div class="flex justify-between mt-5 mb-5"> 
+                            <div class="text-center">
+                                <p class="text-sm">Mostrando</p>
+                                <select v-model="setPaginateNumber" name="showing" id="showing" class="rounded-lg p-1 px-7 text-gray-700" @change="changePaginateNumber">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <Pagination class="float-end" :links="books.links" :books="books" :paginateNumber="paginateNumber"/>
                         </div>
                     </div>
                 </div>

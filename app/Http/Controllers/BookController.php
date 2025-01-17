@@ -17,7 +17,7 @@ class BookController extends Controller
         $user = Auth::user();
         $search = $request->input('search', []);
         $orderByField = $request->input('orderByField', 'title');
-        $paginateNumber = 10;
+        $paginateNumber = $request->input('paginateNumber', 10);
 
         if (isset($search['read_in'])) {
             $search = $this->prepareYearFormatToSave($search);
@@ -31,7 +31,7 @@ class BookController extends Controller
         ->when(isset($search['status']), fn($query) => $query->where('status', $search['status']))
         ->orderBy($orderByField)
         ->paginate($paginateNumber)
-        ->appends(['orderByField' => $orderByField, 'search' => $search]);
+        ->appends(['search' => $search, 'orderByField' => $orderByField, 'paginateNumber' => $paginateNumber]);
 
         return Inertia::render('Index', [
             'books' => $books,
@@ -49,7 +49,6 @@ class BookController extends Controller
         $data = $this->prepareYearFormatToSave($data);
         $data['user_id'] = Auth::user()->id;
 
-        // adicionar validações
         Book::create($data);
         return redirect(route('books'));
     }
