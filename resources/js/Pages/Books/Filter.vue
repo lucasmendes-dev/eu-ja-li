@@ -48,10 +48,10 @@ function clear() {
             <label for="status" class="block mb-2 text-sm font-medium">Status</label>
             <select v-model="form.status" id="status" class="p-3 px-9 block text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-100 dark:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-gray-500">
                 <option value=""></option>
-                <option value="not_completed" class="text-red-400">Não Lido</option>
-                <option value="in_progress" class="text-blue-400">Em Leitura</option>
-                <option value="abandoned" class="text-orange-400">Abandonado</option>
-                <option value="completed" class="text-green-400">Lido</option>
+                <option value="not_completed" class="text-red-600">Não Lido</option>
+                <option value="in_progress" class="text-blue-600">Em Leitura</option>
+                <option value="abandoned" class="text-orange-500">Abandonado</option>
+                <option value="completed" class="text-green-600">Lido</option>
             </select>
         </div>
 
