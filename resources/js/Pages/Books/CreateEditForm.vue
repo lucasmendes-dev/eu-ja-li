@@ -4,6 +4,7 @@ import { router } from '@inertiajs/vue3';
 
 const emit = defineEmits(['close']);
 const props = defineProps({ book: Object });
+const date = new Date();
 
 const form = reactive({
     title: props.book?.title || '',
@@ -28,6 +29,10 @@ function submit() {
         router.put(route('books.update', props.book.id), form);
     }
 
+}
+
+function isYearValid(field) {
+    return form[field] > date.getFullYear();
 }
 
 </script>
@@ -55,6 +60,7 @@ function submit() {
             <div class="mb-5  w-full">
                 <label for="year" class="block mb-2 text-sm font-medium text-gray-900 ">Ano de Publicação</label>
                 <input type="number" id="year" min="1500" step="1" v-model="form.year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ex: 2009"/>
+                <span v-if="isYearValid('year')" class="text-xs text-red-500">O ano deve ser menor que  {{ date.getFullYear() + 1 }}</span>
             </div>
         </div>
 
@@ -66,6 +72,7 @@ function submit() {
                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
                         dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                     placeholder="Ex: 2021"/>
+                <span v-if="isYearValid('read_in')" class="text-xs text-red-500">O ano deve ser menor que  {{ date.getFullYear() + 1 }}</span>
             </div>
 
             <div class="mb-5 w-full">
