@@ -23,6 +23,7 @@ class BookController extends Controller
             $search = $this->prepareYearFormatToSave($search);
         }
 
+        $allBooks = Book::where('user_id', $user->id)->get();
         $books = Book::where('user_id', $user->id)
         ->when(isset($search['title']), fn($query) => $query->where('title', 'like', "%{$search['title']}%"))
         ->when(isset($search['author']), fn($query) => $query->where('author', 'like', "%{$search['author']}%"))
@@ -36,7 +37,8 @@ class BookController extends Controller
         return Inertia::render('Index', [
             'books' => $books,
             'search' => $search,
-            'paginateNumber' => $paginateNumber
+            'paginateNumber' => $paginateNumber,
+            'allBooks' => $allBooks
         ]);
     }
 

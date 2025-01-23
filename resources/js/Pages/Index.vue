@@ -9,7 +9,7 @@ import Pagination from './Books/Pagination.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const props = defineProps({ books: Object, search: Object, paginateNumber: Number });
+const props = defineProps({ books: Object, search: Object, paginateNumber: Number, allBooks: Object });
 
 const isModalOpen = ref(false);
 const setPaginateNumber = ref(props.paginateNumber);
@@ -33,7 +33,7 @@ function changePaginateNumber() {
     <Head title="Eu Já Li - Meus Livros" />
 
     <AuthenticatedLayout>  
-        <div v-if="books.total > 0" class="py-5">
+        <div class="py-5">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg px-5 py-3">
                     <div class="flex">
@@ -120,6 +120,6 @@ function changePaginateNumber() {
                 </div>
             </div>
         </div>
-        <CreateModal :isOpen="isModalOpen" @close="closeModal" />
+        <CreateModal :allBooks="allBooks" :isOpen="isModalOpen" @close="closeModal" />
     </AuthenticatedLayout>
 </template>

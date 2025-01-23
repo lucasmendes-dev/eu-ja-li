@@ -5,6 +5,7 @@ import CreateEditForm from './CreateEditForm.vue';
 
 defineProps({
   isOpen: Boolean,
+  allBooks: Object
 });
 
 const emit = defineEmits(["close"]);
@@ -20,10 +21,10 @@ function handleClose() {
     <div class="modal-content">
       <header>
         <h2 class="font-bold">Adicionar Livro</h2>
-        <button @click="handleClose" class="close-btn">X</button>
+        <button @click="handleClose" class="close-btn mr-4 mt-2">X</button>
       </header>
       <div>
-        <CreateEditForm @close="handleClose" />
+        <CreateEditForm :allBooks="allBooks" @close="handleClose" />
       </div>
     </div>
   </div>

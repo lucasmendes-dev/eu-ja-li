@@ -22,7 +22,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('books')">
-                                    <img src="logo.png" width="75px" alt="logo">
+                                    <img src="/images/logo.png" width="75px" alt="logo">
                                 </Link>
                             </div>
 

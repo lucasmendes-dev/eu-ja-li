@@ -3,7 +3,10 @@ import { reactive, defineEmits } from 'vue';
 import { router } from '@inertiajs/vue3';
 
 const emit = defineEmits(['close']);
-const props = defineProps({ book: Object });
+const props = defineProps({ 
+    book: Object,  // 1 record - comming from edit route
+    allBooks: Object //  All records - comming from CreateModal componet
+});
 const date = new Date();
 
 const form = reactive({
@@ -35,6 +38,12 @@ function isYearValid(field) {
     return form[field] > date.getFullYear();
 }
 
+function bookAlreadyRegistered() {
+    if (props.book == undefined) {
+        return props.allBooks.find(book => book.title.toLowerCase() === form.title.toLowerCase());
+    }
+}
+
 </script>
 
 <template>
@@ -43,6 +52,7 @@ function isYearValid(field) {
             <div class="mb-5  w-full">
                 <label for="title" class="block mb-2 text-sm font-medium text-gray-900 w-1/2">Título <span class="text-red-500">*</span></label>
                 <input type="text" id="title" v-model="form.title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required  placeholder="Nome do livro"/>
+                <span v-if="bookAlreadyRegistered()" class="text-xs text-red-500">Este livro já está cadastrado</span>
             </div>
 
             <div class="mb-5  w-full">
