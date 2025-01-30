@@ -1,20 +1,20 @@
 <script setup>
-import { computed } from 'vue';
+import { reactive } from 'vue';
 import { Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     books: Object
 });
 
-const statusColors = {
+const statusColors = reactive({
     not_completed: 'bg-red-600 text-white',
     in_progress: 'bg-blue-600 text-white',
     abandoned: 'bg-orange-500 text-white',
     completed: 'bg-green-600 text-white',
-};
+});
 
 function statusColorClass(status) {
-    return this.statusColors[status];
+    return statusColors[status] || '';
 }
 
 function bookStatusLabel(status) {
@@ -109,10 +109,10 @@ function askDelete(bookId) {
                     <span
                         :class="[
                             'rounded-full px-2',
-                            statusColorClass(book.status)
+                            statusColorClass(book?.status)
                         ]"
                     >
-                        {{ bookStatusLabel(book.status) }}
+                        {{ bookStatusLabel(book?.status) }}
                     </span>
                 </td>
 

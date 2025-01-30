@@ -99,7 +99,7 @@ function changePaginateNumber() {
                                     <div class="p-6 text-gray-900 dark:text-gray-100">
                                         <div class="flex items-center justify-center">
                                             <a href="/">
-                                                <img src="logo.png" width="100px" alt="logo">
+                                                <img src="images/logo.png" width="100px" alt="logo">
                                             </a>
                                         </div>
                                         <h1 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-center">Seja bem-vindo, {{ $page.props.auth.user.name }}!</h1>
